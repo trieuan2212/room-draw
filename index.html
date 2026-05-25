@@ -201,6 +201,7 @@
     }
     .room-tag.good { background: var(--green-light); color: var(--green); }
     .room-tag.bad { background: rgba(214,78,30,0.15); color: var(--accent); }
+    .room-floor { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
     .draw-btn {
       width: 100%;
@@ -335,7 +336,7 @@
 <body>
   <div class="page">
     <header>
-      <div class="badge">June Trip 2025</div>
+      <div class="badge">Tháng 6 - Phú Yên/Cam Ranh Trip 2026</div>
       <h1>Room <span>Draw</span></h1>
       <p class="subtitle">4 couples · 4 rooms · 1 unlucky one.<br>May the odds be ever in your favour.</p>
     </header>
@@ -361,10 +362,10 @@
   <script>
     let couples = ["", "", "", ""];
     let rooms = [
-      { name: "King suite", unlucky: false },
-      { name: "Queen room", unlucky: false },
-      { name: "Garden view room", unlucky: false },
-      { name: "Twin beds room", unlucky: true },
+      { name: "King suite", unlucky: false, floor: "downstairs" },
+      { name: "Queen room", unlucky: false, floor: "downstairs" },
+      { name: "Garden view room", unlucky: false, floor: "upstairs" },
+      { name: "Twin beds room", unlucky: true, floor: "upstairs" },
     ];
 
     function renderCouples() {
@@ -390,6 +391,7 @@
         tile.innerHTML = `
           <input type="text" value="${r.name}" oninput="rooms[${i}].name=this.value" placeholder="Room name" />
           <div class="room-tag ${r.unlucky ? 'bad' : 'good'}">${r.unlucky ? '😬 Twin beds' : '✓ Nice room'}</div>
+          <div class="room-floor">${r.floor === 'downstairs' ? '⬇️ Downstairs' : '⬆️ Upstairs'}</div>
         `;
         list.appendChild(tile);
       });
@@ -436,7 +438,7 @@
         item.innerHTML = `
           <div class="result-num">${i + 1}</div>
           <div class="result-text">
-            <div class="result-room-name">${room.name}</div>
+            <div class="result-room-name">${room.name} · ${room.floor === 'downstairs' ? '⬇️ Downstairs' : '⬆️ Upstairs'}</div>
             <div class="result-couple-name">${shuffled[i]}</div>
           </div>
           <div class="result-emoji">${room.unlucky ? '😅' : emojis[i % emojis.length]}</div>
